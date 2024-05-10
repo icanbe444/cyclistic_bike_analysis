@@ -1,0 +1,148 @@
+---
+title: "Cyclistic Marketing Analysis"
+author: "Akanbi Abdullahi"
+date: "2024-05-03"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+rm(list=ls())
+```
+
+```{r}
+# Load necessary libraries
+library(dplyr)
+library(ggplot2)
+```
+
+
+```{r}
+
+# Create a data frame with the provided data
+ride_data <- data.frame(
+  member_casual = c("casual", "casual", "casual", "casual", "casual", "casual", "casual", 
+                    "member", "member", "member", "member", "member", "member", "member"),
+  weekday = factor(c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat",
+                     "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"),
+                    levels = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")),
+  number_of_rides = c(18652, 5591, 7311, 7690, 7147, 8013, 13473, 60197, 110430, 127974, 121902, 125228, 115168, 59413),
+  average_duration = c(3114.9689, 3476.3727, 3201.6414, 2864.5514, 7165.2442, 5076.3010, 3499.2652, 338.4886, 237.8158, 174.8043, 122.6165, 135.1998, 248.3190, 475.4717)
+)
+
+```
+
+###Volume of Rides by Weekday
+To compare the ride volume between casual riders and members for each day of the week:
+
+```{r}
+ggplot(data = ride_data, aes(x = weekday, y = number_of_rides, fill = member_casual)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(
+    title = "Number of Rides by Day of the Week",
+    x = "Day of the Week",
+    y = "Number of Rides",
+    fill = "Rider Type"
+  ) +
+  theme_minimal() +
+  scale_fill_manual(values = c("casual" = "skyblue", "member" = "orange"))
+
+```
+
+This bar plot shows the number of rides for casual riders and members across the week. You can quickly identify which group has more rides on each day, providing a sense of usage patterns.
+
+
+
+###Average Duration by Weekday
+Next, let's examine the average ride duration for each day to understand how members and casual riders differ:
+```{r}
+ggplot(data = ride_data, aes(x = weekday, y = average_duration, color = member_casual, shape = member_casual)) +
+  geom_point(size = 3) +
+  labs(
+    title = "Average Ride Duration by Day of the Week",
+    x = "Day of the Week",
+    y = "Average Duration (seconds)",
+    color = "Rider Type",
+    shape = "Rider Type"
+  ) +
+  theme_minimal() +
+  scale_color_manual(values = c("casual" = "skyblue", "member" = "orange"))
+
+```
+This scatter plot shows the average duration of rides for casual riders and members across the week. The noticeable differences in durations between the groups and across the days provide insights into usage patterns.
+
+
+
+---
+Business Task Statement for Cyclistic Marketing Analysis
+---
+
+###Business Task:
+The primary business task is to determine how annual members and casual riders use Cyclistic bikes differently. The insights from this analysis will inform a new marketing strategy aimed at converting casual riders into annual members, leading to a more stable and profitable customer base.
+Key Stakeholders:
+•	Cyclistic Executive Team: Decision-makers responsible for approving and guiding strategic business initiatives.
+•	Cyclistic Marketing Team: Responsible for developing and executing marketing campaigns. This team, led by Lily Moreno, needs insights to design targeted marketing strategies that drive conversion from casual riders to annual members.
+•	Cyclistic Finance Team: Concerned with the financial impact and revenue implications of customer behaviors and pricing strategies.
+•	Cyclistic Customers: Casual riders and annual members who use Cyclistic bikes in Chicago. The goal is to enhance their experience and encourage a transition from casual to annual membership.
+
+###Purpose and Context:
+Cyclistic has a diverse customer base with a flexible pricing model that includes single-ride passes, full-day passes, and annual memberships. Finance analysts have determined that annual members are more profitable than casual riders, indicating that a shift towards more annual memberships could positively impact Cyclistic's revenue. The marketing team, therefore, aims to understand the behavioral patterns of these two customer groups to design effective marketing campaigns for converting casual riders into annual members.
+
+###Desired Outcome:
+The desired outcome is to gain actionable insights into how casual riders and annual members differ in their usage patterns of Cyclistic bikes. These insights will form the basis of targeted marketing strategies that promote annual memberships, thereby increasing the company's profitability and customer retention.
+By focusing on the first question, "How do annual members and casual riders use Cyclistic bikes differently?", I have gathered and analyzed relevant data to uncover usage trends, behavior patterns, and preferences that could guide future marketing efforts. This analysis will help answer the question and inform the subsequent marketing campaign design.
+Observations and Insights
+Based on these visualizations and the given data:
+Volume of Rides: Members have significantly more rides than casual riders on weekdays, indicating a stronger pattern of regular usage, potentially for commuting or other daily activities. Casual riders, however, tend to have a higher volume on weekends, suggesting more leisure-oriented use.
+
+Average Duration: Casual riders typically have much longer average ride durations compared to members, indicating that casual riders might use bikes for longer leisure rides or occasional trips. Members have shorter average durations, likely due to more frequent and utilitarian use, such as commuting.
+
+These insights are key for understanding rider behavior and can guide marketing strategies to convert casual riders into annual members. For example, highlighting the benefits of shorter, frequent rides for commuting might appeal to casual riders, encouraging them to consider membership. Similarly, understanding that casual riders tend to ride longer on weekends can help shape leisure-focused marketing campaigns.
+
+###Recommendations to Convert Casual Riders to Members
+To convert casual riders to annual members, Cyclistic Share Company can focus on creating a more compelling value proposition for annual memberships. Here are some recommendations based on the data analysis and observed usage patterns:
+1. Tailored Marketing Campaigns
+Targeted Messaging: Highlight the benefits of annual membership, such as cost savings, convenience, and exclusive perks. For example, emphasize that annual members pay a lower rate per ride compared to casual riders.
+Usage Scenarios: Illustrate scenarios where membership adds value, such as daily commuting, regular weekend rides, and group rides with friends     and family.
+Customer Testimonials: Use stories from existing members to showcase how membership has improved their experience.
+
+2. Weekend Promotions
+Given that casual riders tend to ride more on weekends, Cyclistic could offer special promotions or incentives for casual riders who convert to annual memberships during the weekend. This could include:
+Discounted Annual Memberships: Offering a discount for weekend sign-ups.
+Weekend-Only Benefits: Special benefits for new members who join during the weekend, such as free merchandise or additional ride time.
+3. Commuter Incentives
+Since members are more likely to ride on weekdays, Cyclistic could target casual riders with commuter-focused incentives to encourage membership. Consider:
+Commuter Package: A special annual membership designed for commuters, including benefits like unlimited weekday rides, priority docking at          commuter-heavy stations, or complimentary coffee at partner cafes.
+Employer Partnerships: Work with local businesses to offer corporate memberships or discounts for employees who commute by bike.
+
+4. Exclusive Member Benefits
+Create exclusive benefits for annual members to enhance the perceived value of membership. This could include:
+Member-Only Events: Organize bike tours, group rides, or social events exclusively for annual members.
+Partner Discounts: Collaborate with local businesses to offer discounts to annual members, such as restaurants, gyms, or entertainment venues.
+Priority Access: Allow members early access to new bikes, exclusive docking stations, or priority customer support.
+
+5. Improved User Experience
+To encourage casual riders to convert, Cyclistic can focus on improving the overall user experience. This could involve:
+Streamlined App Experience: Making it easier for casual riders to upgrade to annual memberships through the app.
+Enhanced Communication: Providing helpful tips and information about bike usage, safety, and maintenance to create a sense of community and         support.
+Loyalty Programs: Introducing a loyalty program where casual riders can earn points for rides, which can be redeemed for discounts on annual        memberships.
+
+These recommendations address various aspects of the customer journey and aim to create compelling reasons for casual riders to become annual members. By offering targeted promotions, exclusive benefits, and a better overall experience, Cyclistic can attract and retain more annual members, leading to increased profitability and business growth.
+
+
+###Additional Data Needed for Analysis
+Having information such as employment status and type of employment of the riders can give more  insight into their ride pattern. This information could reveal their financial status, free time and how much they value. Spending time with group of people or family.  
+
+###Data Source
+The data used for the analysis was extracted from the  Divvy 2019 Q1 and Divvy 2020 Q1.
+The data has been made available by Motivate International Inc. and it was provided under the data licence data agreement. Bikeshare hereby grants a non-exclusive, royalty-free, limited, perpetual license to access, reproduce, analyze, copy, modify, distribute in your product or service and use the Data for any lawful purpose (“License”).
+
+###Cleaning & manipulation of data
+The data from the two different files were merged. After comparing the names of the columns in the two files, I have renamed columns  to make the one in q1_2019 consistent with q1_2020 (as this will be the supposed going-forward table design for Divvy). After merging the two files, I removed some columns that are irrelevant.
+These columns are; start_lat, start_lng, end_lat, end_lng, birthyear, gender.
+In the "member_casual" column, there are two names for members ("member" and "Subscriber") and two names for casual riders ("Customer" and "casual"). I have consolidated that from four to two labels.- Member & Casual.
+Added columns that list the date, month, day, and year of each ride and converted "ride_length" from Factor to numeric so we can run calculations on the data. 
+The dataframe includes a few hundred entries when bikes were taken out of docks and checked for quality by Divvy or ride_length was negative. I have created a new version of the dataframe (v2) since data is being removed.
